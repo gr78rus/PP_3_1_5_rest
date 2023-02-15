@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <style>
+        table {
+            width:100%;
+        }
+        table tr:nth-child(even) {
+            background-color: #eee;
+        }
+        table tr:nth-child(odd) {
+            background-color:#fff;
+        }
+        table th	{
+            background-color: black;
+            color: white;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+
+<body>
+
+    <table>
+        <td>
+            <form action="admin/new" align="left">
+                <button type="submit">Create User</button>
+            </form>
+        </td>
+        <td>
+        <form th:action="@{/logout}" method="POST" align="right">
+            <input type="submit" value="Logout"/>
+        </form>
+        </td>
+    </table>
+    <hr>
+    <br>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>e-mail</th>
+            <th>Role</th>
+            <th>Edit</th>
+            <th>Delete</th>
+
+        </tr>
+        <tr th:each="user: ${users}">
+            <td>
+                <a th:href="@{/admin/{id}(id=${user.getId()})}" th:text="${user.name}"/>
+            </td>
+            <td th:text="${user.surname}"/>
+            <td th:text="${user.email}"/>
+            <td th:text="${user.roles}"/>
+
+            <td>
+            <form th:method="GET" th:action="@{/admin/{id}/edit(id=${user.getId()})}" align="center">
+                <input type="submit" value="Edit"/>
+            </form>
+            </td>
+            <td>
+            <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}" align="center">
+                <input type="submit" value="Delete"/>
+            </form>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
