@@ -29,12 +29,14 @@ public class Init {
         userService.saveUser(new User(
                 "admin",
                 "adminov",
+                35,
                 "admin@admin.com",
                 "admin",
                 List.of(admin, user)));
         userService.saveUser(new User(
                 "user",
                 "userov",
+                40,
                 "user@user.com",
                 "user",
                 List.of(user)));

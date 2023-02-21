@@ -11,6 +11,8 @@ public interface UserDao {
 
    User findUserByName(String name);
 
+   User findUserByEmail(String email);
+
    void createUser(User user);
 
    void updateUser(User user);

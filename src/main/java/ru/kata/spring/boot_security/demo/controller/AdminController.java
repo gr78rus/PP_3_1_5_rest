@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -17,8 +19,9 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public String showAllUser(Model model) {
+    public String showAllUser(Model model, Principal principal) {
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("userAuth", userService.findUserByName(principal.getName()));
         return "admin/index";
     }
 

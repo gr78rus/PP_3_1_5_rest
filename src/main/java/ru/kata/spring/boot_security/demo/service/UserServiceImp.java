@@ -49,6 +49,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public User findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
+
+    @Override
     public Role findRoleById(long id) {
         return roleDao.findRoleById(id);
     }
@@ -98,7 +103,7 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findUserByName(username);
+        User user = findUserByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
