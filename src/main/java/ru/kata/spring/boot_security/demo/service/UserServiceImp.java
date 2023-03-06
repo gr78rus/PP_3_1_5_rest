@@ -66,12 +66,6 @@ public class UserServiceImp implements UserService {
     @Override
     @Transactional
     public void saveUser(User user) {
-
-        if (user.getId() == null) {
-            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        } else if (!userDao.findUserById(user.getId()).getPassword().equals(user.getPassword())) {
-            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        }
         List<Role> rolesDB = new ArrayList<>();
         List<String> stringList = user.getRoles().stream().map(Role::getName).collect(Collectors.toList());
 
@@ -82,10 +76,12 @@ public class UserServiceImp implements UserService {
         user.setRoles(rolesDB);
 
         if (user.getId() == null) {
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             userDao.createUser(user);
-        } else {
+        } else if (!userDao.findUserById(user.getId()).getPassword().equals(user.getPassword())) {
+            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
             userDao.updateUser(user);
-        }
+        } else {userDao.updateUser(user);}
     }
 
     @Override
